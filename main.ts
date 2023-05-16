@@ -1,7 +1,5 @@
 /**
 * makecode Four Digit Display (TM1637) Package.
-* From microbit/micropython Chinese community.
-* http://www.micropython.org.cn
 */
 
 /**
@@ -15,7 +13,7 @@ namespace TM1637 {
     let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
 	let clk=DigitalPin.P13;
 	let dio=DigitalPin.P14;
-	let buf=pins.createBuffer(4);
+	let buf;
 	let _ON=4;
 	let brightness=7;
 	let count=4;
@@ -100,6 +98,29 @@ namespace TM1637 {
             this._write_dsp_ctrl();
         }
 
+		/**
+         * 打开显示
+         */
+        //% blockId="TM1637_on" block="打开"
+        //% weight=50 blockGap=8
+        export function on() {
+            this._ON = 8;
+            this._write_data_cmd();
+            this._write_dsp_ctrl();
+        }
+
+        /**
+         * 关闭显示
+         */
+        //% blockId="TM1637_off" block="关闭"
+        //% weight=50 blockGap=8
+        export function off() {
+            this._ON = 0;
+            this._write_data_cmd();
+            this._write_dsp_ctrl();
+        }
+
+
         /**
          * show a number in given position. 
          * @param num number will show, eg: 5
@@ -155,25 +176,5 @@ namespace TM1637 {
             }
         }
 
-        /**
-         * turn on LED. 
-         */
-        //% blockId="TM1637_on" block="打开"
-        //% weight=86 blockGap=8
-        export function on() {
-            this._ON = 8;
-            this._write_data_cmd();
-            this._write_dsp_ctrl();
-        }
-
-        /**
-         * turn off LED. 
-         */
-        //% blockId="TM1637_off" block="关闭"
-        //% weight=85 blockGap=8
-        export function off() {
-            this._ON = 0;
-            this._write_data_cmd();
-            this._write_dsp_ctrl();
-        }
+     
 }
