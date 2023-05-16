@@ -5,7 +5,7 @@
 */
 
 /**
- * Four Digit Display
+ * TM1637 digit Display
  */
 //% weight=100 color=#50A820 icon="8" block="四位数码管"
 namespace TM1637 {
@@ -29,6 +29,7 @@ namespace TM1637 {
 			this._ON = 8;
             this.buf = pins.createBuffer(this.count);
             this.clear();
+			intensity(this.brightness);
         }
 
         /**
@@ -75,10 +76,7 @@ namespace TM1637 {
          * set TM1637 intensity, range is [0-8], 0 is off.
          * @param val the brightness of the TM1637, eg: 7
          */
-        //% blockId="TM1637_set_intensity" block="%tm|set intensity %val"
-        //% weight=50 blockGap=8
-        //% parts="TM1637"
-        export function intensity(val: number = 7) {
+        function intensity(val: number = 7) {
             if (val < 1) {
                 this.off();
                 return;
@@ -107,9 +105,8 @@ namespace TM1637 {
          * @param num number will show, eg: 5
          * @param bit the position of the LED, eg: 0
          */
-        //% blockId="TM1637_showbit" block="%tm|show digit %num |at %bit"
+        //% blockId="TM1637_showbit" block="显示数字 %num|在 %bit"
         //% weight=90 blockGap=8
-        //% parts="TM1637"
         export function showbit(num: number = 5, bit: number = 0) {
             this.buf[bit % this.count] = _SEGMENTS[num % 16]
             this._dat(bit, _SEGMENTS[num % 16])
@@ -119,9 +116,8 @@ namespace TM1637 {
           * show a number. 
           * @param num is a number, eg: 0
           */
-        //% blockId="TM1637_shownum" block="%tm|show number %num"
+        //% blockId="TM1637_shownum" block="显示数字 %num"
         //% weight=91 blockGap=8
-        //% parts="TM1637"
         export function showNumber(num: number) {
             if (num < 0) {
                 this._dat(0, 0x40) // '-'
@@ -135,32 +131,12 @@ namespace TM1637 {
         }
 
         /**
-          * show a hex number. 
-          * @param num is a hex number, eg: 0
-          */
-        //% blockId="TM1637_showhex" block="%tm|show hex number %num"
-        //% weight=90 blockGap=8
-        //% parts="TM1637"
-        export function showHex(num: number) {
-            if (num < 0) {
-                this._dat(0, 0x40) // '-'
-                num = -num
-            }
-            else
-                this.showbit((num >> 12) % 16)
-            this.showbit(num % 16, 3)
-            this.showbit((num >> 4) % 16, 2)
-            this.showbit((num >> 8) % 16, 1)
-        }
-
-        /**
          * show or hide dot point. 
          * @param bit is the position, eg: 1
          * @param show is show/hide dp, eg: true
          */
-        //% blockId="TM1637_showDP" block="%tm|DotPoint at %bit|show %show"
+        //% blockId="TM1637_showDP" block="显示小数点 %bit|是否显示 %show"
         //% weight=70 blockGap=8
-        //% parts="TM1637"
         export function showDP(bit: number = 1, show: boolean = true) {
             bit = bit % this.count
             if (show) this._dat(bit, this.buf[bit] | 0x80)
@@ -170,9 +146,8 @@ namespace TM1637 {
         /**
          * clear LED. 
          */
-        //% blockId="TM1637_clear" block="clear %tm"
+        //% blockId="TM1637_clear" block="清空"
         //% weight=80 blockGap=8
-        //% parts="TM1637"
         export function clear() {
             for (let i = 0; i < this.count; i++) {
                 this._dat(i, 0)
@@ -183,9 +158,8 @@ namespace TM1637 {
         /**
          * turn on LED. 
          */
-        //% blockId="TM1637_on" block="turn on %tm"
+        //% blockId="TM1637_on" block="打开"
         //% weight=86 blockGap=8
-        //% parts="TM1637"
         export function on() {
             this._ON = 8;
             this._write_data_cmd();
@@ -195,9 +169,8 @@ namespace TM1637 {
         /**
          * turn off LED. 
          */
-        //% blockId="TM1637_off" block="turn off %tm"
+        //% blockId="TM1637_off" block="关闭"
         //% weight=85 blockGap=8
-        //% parts="TM1637"
         export function off() {
             this._ON = 0;
             this._write_data_cmd();
