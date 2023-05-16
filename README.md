@@ -11,7 +11,6 @@ https://github.com/imessagewall/TM1637
 
 搜索后就可以添加并使用本软件包了。
 
-![image](https://github.com/zhuning239/TM1637/blob/master/4-LED.jpg)
 
 ## API
 
@@ -48,14 +47,6 @@ show, True will show DP, other will hide it
 - **intensity(dat: number)**  
 set display intensity.  
 
-## 演示
-
-
-## 授权方式  
-
-MIT
-
-湖南创乐博智能科技有限公司 
 
 ## 支持硬件 
 
