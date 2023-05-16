@@ -3,16 +3,11 @@ makecode 四位数码管 (TM1637) microbit 软件包
 
 带1-6（普通4）7段LED的LED数字显示模块，它可以显示数字。里面有TM1637芯片，用一个2线接口控制；
 
-作者: 朱林
-时间: 2018/4
-
-![image](https://github.com/zhuning239/TM1637/blob/master/icon.png)
-
 ## 使用方式
 
 打开 makecode 编辑器，在项目中选择添加软件包，然后在地址栏输入下面网址：  
 
-https://github.com/zhuning239/TM1637  
+https://github.com/imessagewall/TM1637
 
 搜索后就可以添加并使用本软件包了。
 
@@ -55,7 +50,6 @@ set display intensity.
 
 ## 演示
 
-![image](https://github.com/zhuning239/TM1637/blob/master/demo.jpg)
 
 ## 授权方式  
 
