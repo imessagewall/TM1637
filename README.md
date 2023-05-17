@@ -14,41 +14,19 @@ https://github.com/imessagewall/TM1637
 
 ## API
 
-- **create(clk: DigitalPin, dio: DigitalPin, intensity: number, count: number)**  
-create a TM1637 object.  
-  - clk, any DigitalPin  
-  - dio, any DigitalPin  
-  - intensity, set display brightness, range [0-8]  
-  - count, LED count, range [1-5]  
-
-- **on()**  
-turn on the display.  
-
-- **off()**  
-turn off the display.  
-
 - **clear()**  
-clear content of the display.  
+清空显示 
 
-- **showbit(num: number, bit: number)**  
-show a digit number in given position.  
+- **showbit(bit: number,num: number)**  
+在第几位显示数字
 
 - **showNumber(num: number)**  
-show a interger number in display.  
+显示数字
 
-- **showHex(num: number)**  
-show a hex number.  
-
-- **showDP(bit: number, show: boolean)**  
-show or hide dot piont in give bit  
-bit is dot piont position, [0 - count]  
-show, True will show DP, other will hide it  
-
-- **intensity(dat: number)**  
-set display intensity.  
+- **showDP(show: boolean=true)**  
+显示时钟点
 
 
 ## 支持硬件 
 
-* for PXT/microbit
-
+* for microbit
