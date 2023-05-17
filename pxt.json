@@ -1,6 +1,6 @@
 {
     "name": "四位数码管",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "四位数码管 (TM1637) 驱动 (micro:bit)",
     "license": "MIT",
     "dependencies": {
