@@ -1,7 +1,7 @@
 {
-    "name": "TM1637",
+    "name": "四位数码管",
     "version": "1.0.0",
-    "description": "makecode LED Digit Display (TM1637) package for micro:bit",
+    "description": "四位数码管 (TM1637) 驱动 (micro:bit)",
     "license": "MIT",
     "dependencies": {
         "core": "*"
