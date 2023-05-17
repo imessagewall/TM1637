@@ -103,7 +103,7 @@ namespace TM1637 {
             _dat(0, 0x40) // '-'
             num = -num
         }
-        else{
+        else
             showbit((num / 1000) % 10)
         showbit(num % 10, 3)
         showbit((num / 10) % 10, 2)
