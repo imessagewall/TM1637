@@ -1,4 +1,3 @@
-
 /**
 * makecode Four Digit Display (TM1637) Package.
 */
@@ -85,9 +84,9 @@ namespace TM1637 {
      * @param num number will show, eg: 5
      * @param bit the position of the LED, eg: 0
      */
-    //% blockId="TM1637_showbit" block="显示数字 %num|在 %bit"
+    //% blockId="TM1637_showbit" block="在 %bit | 显示数字 %num"
     //% weight=90 blockGap=8
-    export function showbit(num: number = 5, bit: number = 0) {
+    export function showbit(bit: number = 0,num: number = 5) {
         buf[bit % count] = _SEGMENTS[num % 16]
         _dat(bit, _SEGMENTS[num % 16])
     }
@@ -103,11 +102,12 @@ namespace TM1637 {
             _dat(0, 0x40) // '-'
             num = -num
         }
-        else
+        else {
             showbit((num / 1000) % 10)
-        showbit(num % 10, 3)
-        showbit((num / 10) % 10, 2)
-        showbit((num / 100) % 10, 1)
+            showbit(num % 10, 3)
+            showbit((num / 10) % 10, 2)
+            showbit((num / 100) % 10, 1)
+        }
     }
 
     /**
@@ -134,6 +134,4 @@ namespace TM1637 {
             buf[i] = 0
         }
     }
-
-
 }
