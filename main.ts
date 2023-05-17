@@ -86,7 +86,7 @@ namespace TM1637 {
      */
     //% blockId="TM1637_showbit" block="在 %bit | 显示数字 %num"
     //% weight=90 blockGap=8
-    export function showbit(bit: number = 0,num: number = 5) {
+    export function showbit(bit: number = 0, num: number = 5) {
         buf[bit % count] = _SEGMENTS[num % 16]
         _dat(bit, _SEGMENTS[num % 16])
     }
@@ -99,28 +99,28 @@ namespace TM1637 {
     //% weight=91 blockGap=8
     export function showNumber(num: number) {
         if (num < 0) {
-            _dat(0, 0x40) // '-'
-            num = -num
+            _dat(0, 0)
         }
         else {
-            showbit((num / 1000) % 10)
-            showbit(num % 10, 3)
-            showbit((num / 10) % 10, 2)
-            showbit((num / 100) % 10, 1)
+            showbit(3, num % 10)
+            showbit(2, (num / 10) % 10)
+            showbit(1, (num / 100) % 10)
+            showbit(0, (num / 1000) % 10)
         }
     }
 
     /**
-     * show or hide dot point. 
-     * @param bit is the position, eg: 1
-     * @param show is show/hide dp, eg: true
+     * show or hide dot point.  实际就是LED1的小数点
      */
-    //% blockId="TM1637_showDP" block="显示小数点 %bit|是否显示 %show"
+    //% blockId="TM1637_showDP" block="显示点 %show"
     //% weight=70 blockGap=8
-    export function showDP(bit: number = 1, show: boolean = true) {
-        bit = bit % count
-        if (show) _dat(bit, buf[bit] | 0x80)
-        else _dat(bit, buf[bit] & 0x7F)
+    export function showDP(show: boolean = true) {
+        if (show) {
+            _dat(1, buf[1] | 0x80)
+        }
+        else {
+            _dat(1, buf[1] & 0x7F)
+        }
     }
 
     /**
