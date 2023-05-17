@@ -8,19 +8,19 @@
  */
 //% weight=100 color=#50A820 icon="8" block="四位数码管"
 namespace TM1637 {
-    let TM1637_CMD1 = 0x40;
-    let TM1637_CMD2 = 0xC0;
-    let TM1637_CMD3 = 0x80;
+    let TM1637_CMD1 = 0x40;  //数据命令，写数据模式
+    let TM1637_CMD2 = 0xC0;  //地址命令，显示寄存器地址 00H  01H  02H  03H  04H  05H
+    let TM1637_CMD3 = 0x80;  //显示控制，设置脉冲宽度
     let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
     let clk = DigitalPin.P13;
     let dio = DigitalPin.P14;
     let buf = pins.createBuffer(4);
-    let _ON = 4;
-    let brightness = 7;
+    let _ON = 4;  //8 显示打开   4 显示关闭
+    let brightness = 6;
     let count = 4;
 
     /**
-     * Start 
+     * Start   设置clk低电平，dio上的变化才有效
      */
     function _start() {
         pins.digitalWritePin(dio, 0);
@@ -29,7 +29,7 @@ namespace TM1637 {
     }
 
     /**
-     * Stop
+     * Stop   clk高电平时，dio由低变高则代表停止信号
      */
     function _stop() {
         pins.digitalWritePin(dio, 0);
@@ -47,7 +47,7 @@ namespace TM1637 {
     }
 
     /**
-     * send command3
+     * 显示控制命令
      */
     function _write_dsp_ctrl() {
         _start();
@@ -69,22 +69,6 @@ namespace TM1637 {
     }
 
     /**
-     * set TM1637 intensity, range is [0-8], 0 is off.
-     * @param val the brightness of the TM1637, eg: 7
-     */
-    function intensity(val: number = 7) {
-        if (val < 1) {
-            off();
-            return;
-        }
-        if (val > 8) val = 8;
-        _ON = 8;
-        brightness = val - 1;
-        _write_data_cmd();
-        _write_dsp_ctrl();
-    }
-
-    /**
      * set data to TM1637, with given bit
      */
     function _dat(bit: number, dat: number) {
@@ -95,29 +79,6 @@ namespace TM1637 {
         _stop();
         _write_dsp_ctrl();
     }
-
-    /**
-     * 打开显示
-     */
-    //% blockId="TM1637_on" block="打开"
-    //% weight=50 blockGap=8
-    export function on() {
-        _ON = 8;
-        _write_data_cmd();
-        _write_dsp_ctrl();
-    }
-
-    /**
-     * 关闭显示
-     */
-    //% blockId="TM1637_off" block="关闭"
-    //% weight=50 blockGap=8
-    export function off() {
-        _ON = 0;
-        _write_data_cmd();
-        _write_dsp_ctrl();
-    }
-
 
     /**
      * show a number in given position. 
@@ -142,7 +103,7 @@ namespace TM1637 {
             _dat(0, 0x40) // '-'
             num = -num
         }
-        else
+        else{
             showbit((num / 1000) % 10)
         showbit(num % 10, 3)
         showbit((num / 10) % 10, 2)
@@ -165,7 +126,7 @@ namespace TM1637 {
     /**
      * clear LED. 
      */
-    //% blockId="TM1637_clear" block="清空"
+    //% blockId="TM1637_clear" block="清空显示"
     //% weight=80 blockGap=8
     export function clear() {
         for (let i = 0; i < count; i++) {
